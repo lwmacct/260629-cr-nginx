@@ -13,7 +13,7 @@ sed -i 's@//.*archive.ubuntu.com@//mirrors.ustc.edu.cn@g' /etc/apt/sources.list.
 sed -i 's@//ports.ubuntu.com@//mirrors.ustc.edu.cn@g' /etc/apt/sources.list.d/ubuntu.sources
 sed -i 's/security.ubuntu.com/mirrors.ustc.edu.cn/g' /etc/apt/sources.list.d/ubuntu.sources
 apt-get update
-apt-get install -y --no-install-recommends ca-certificates curl wget sudo pcp gnupg
+apt-get install -y --no-install-recommends tini ca-certificates curl wget sudo pcp gnupg
 sed -i 's@http:@https:@g' /etc/apt/sources.list.d/ubuntu.sources
 apt-get clean
 rm -rf /var/lib/apt/lists/*
@@ -27,8 +27,8 @@ RUN <<'RUN_EOF'
 set -eux
 echo "语言/时间"
 apt-get update
-apt-get install -y --no-install-recommends locales fonts-wqy-zenhei fonts-wqy-microhei tzdata
-locale-gen zh_CN.UTF-8 en_US.UTF-8
+apt-get install -y --no-install-recommends locales tzdata
+locale-gen en_US.UTF-8
 update-locale LANG=en_US.UTF-8 LC_ALL=en_US.UTF-8 LANGUAGE=en_US.UTF-8
 ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 echo "Asia/Shanghai" > /etc/timezone
@@ -46,3 +46,8 @@ nginx -V
 apt-get clean
 rm -rf /var/lib/apt/lists/*
 RUN_EOF
+
+EXPOSE 80
+STOPSIGNAL SIGQUIT
+ENTRYPOINT ["tini", "--"]
+CMD ["nginx", "-g", "daemon off;"]
