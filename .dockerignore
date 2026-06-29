@@ -1,0 +1,9 @@
+.git
+.github
+node_modules
+npm-debug.log
+Dockerfile.hbs
+index.js
+package-lock.json
+package.json
+Taskfile.yml

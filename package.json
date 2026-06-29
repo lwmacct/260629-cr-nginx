@@ -1,0 +1,25 @@
+{
+  "name": "workspace",
+  "version": "0.2.260629",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "generate": "node .",
+    "start": "node ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lwmacct/260629-cr-nginx.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/lwmacct/260629-cr-nginx/issues"
+  },
+  "homepage": "https://github.com/lwmacct/260629-cr-nginx#readme",
+  "dependencies": {
+    "handlebars": "^4.7.9"
+  }
+}

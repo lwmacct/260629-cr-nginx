@@ -1,0 +1,9 @@
+repos:
+  - repo: local
+    hooks:
+      - id: generate-dockerfile
+        name: Generate Dockerfile
+        entry: npm run generate
+        language: system
+        pass_filenames: false
+        always_run: true
