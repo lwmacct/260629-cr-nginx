@@ -13,7 +13,7 @@ sed -i 's@//.*archive.ubuntu.com@//mirrors.ustc.edu.cn@g' /etc/apt/sources.list.
 sed -i 's@//ports.ubuntu.com@//mirrors.ustc.edu.cn@g' /etc/apt/sources.list.d/ubuntu.sources
 sed -i 's/security.ubuntu.com/mirrors.ustc.edu.cn/g' /etc/apt/sources.list.d/ubuntu.sources
 apt-get update
-apt-get install -y --no-install-recommends tini ca-certificates curl wget sudo pcp gnupg
+apt-get install -y --no-install-recommends ca-certificates curl wget sudo pcp gnupg
 sed -i 's@http:@https:@g' /etc/apt/sources.list.d/ubuntu.sources
 apt-get clean
 rm -rf /var/lib/apt/lists/*
@@ -39,9 +39,11 @@ RUN_EOF
 
 RUN <<'RUN_EOF'
 set -eux
-echo "安装 nginx 和 lua 模块"
+echo "安装常用工具和 nginx 模块"
 apt-get update
-apt-get install -y --no-install-recommends nginx libnginx-mod-http-lua 'lua-nginx-*'
+apt-get install -y --no-install-recommends \
+  tini iproute2 \
+  nginx libnginx-mod-http-lua 'lua-nginx-*'
 nginx -V
 apt-get clean
 rm -rf /var/lib/apt/lists/*
