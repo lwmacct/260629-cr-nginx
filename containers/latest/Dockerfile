@@ -21,8 +21,13 @@ RUN set -eux; \
       ca-certificates \
       curl \
       iproute2 \
-      libnginx-mod-http-lua \
       nginx \
+      libnginx-mod-http-lua \
+      libnginx-mod-stream \
+      libnginx-mod-http-brotli-filter \
+      libnginx-mod-http-brotli-static \
+      libnginx-mod-http-headers-more-filter \
+      libnginx-mod-http-echo \
       tini \
       tzdata; \
     ln -snf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime; \
