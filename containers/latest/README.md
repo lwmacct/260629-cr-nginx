@@ -1,17 +1,56 @@
 # latest container
 
-这个目录维护 `latest` 镜像的 Dockerfile 构建定义。
+This directory maintains the `latest` Ubuntu Nginx image.
 
-## 构建
+## Runtime
 
-```bash
-containers/latest/build.sh ghcr.io/lwmacct/260629-cr-nginx:latest
+- Ubuntu `resolute-20260421`
+- Distribution Nginx
+- `libnginx-mod-http-lua`
+- LuaJIT runtime libraries
+- `lua-resty-core` and `lua-resty-lrucache`
+- Native `linux/amd64` and `linux/arm64` images
+
+The default process is:
+
+```shell
+nginx -g "daemon off;"
 ```
 
-默认构建并推送：
+The process chain is `tini -> Nginx`. Replacing the container command runs the replacement directly under Tini.
 
-```bash
-PLATFORMS=linux/amd64,linux/arm64 containers/latest/build.sh
+## Lua
+
+The image supports embedded Nginx Lua directives such as `init_by_lua_block` and `content_by_lua_block`, including the core `ngx.*` APIs.
+
+It intentionally does not include a standalone `lua` or `luajit` command, or optional `lua-nginx-*` client libraries. Add explicit packages only when an application requires them.
+
+## Configuration
+
+- Main configuration: `/etc/nginx/nginx.conf`
+- HTTP snippets: `/etc/nginx/conf.d/*.conf`
+- Virtual hosts: `/etc/nginx/sites-enabled/*`
+- Access log: `/dev/stdout`
+- Error log: `/dev/stderr`
+
+## Build
+
+From the repository root:
+
+```shell
+task container:build:local
 ```
 
-构建上下文必须是仓库根目录，Dockerfile 路径为 `containers/latest/Dockerfile`。
+From this directory:
+
+```shell
+task build:local
+```
+
+Override the local image name when needed:
+
+```shell
+task container:build:local IMAGE=cr-nginx:dev
+```
+
+The local task uses the host build network and loads a single-platform image into Docker. It never pushes an image. Multi-platform GHCR publishing is owned by the tag-triggered GitHub Actions workflow.
