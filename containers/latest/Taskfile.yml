@@ -12,6 +12,7 @@ tasks:
         --builder "{{.BUILDER}}"
         --file "{{.TASKFILE_DIR}}/Dockerfile"
         --tag "{{.IMAGE}}"
+        --build-arg "MODULE_CACHE_BUST=$(date -u +%Y%m%dT%H%M%SZ)"
         --network host
         --progress plain
         --provenance=false

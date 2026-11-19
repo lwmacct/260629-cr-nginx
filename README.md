@@ -1,6 +1,6 @@
 # cr-nginx
 
-Ubuntu Nginx runtime with minimal `ngx_http_lua` support.
+Official patched Nginx runtime with minimal `ngx_http_lua` support.
 
 ## Quick Start
 
