@@ -188,6 +188,7 @@ RUN set -eux; \
       iproute2 \
       libbrotli1 \
       libluajit-5.1-2 \
+      procps \
       tini \
       tzdata; \
     ln -snf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime; \
